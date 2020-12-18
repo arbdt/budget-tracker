@@ -27,7 +27,21 @@ request.onupgradeneeded = function(event){
 
 // add entries to indexedDB
 function addToOfflineDB(recordToAdd) {
+    //connect to indexed DB instance
     let dbtransaction = db.transaction("pending", "readwrite");
     let dbstore = dbtransaction.objectStore("pending");
+    // add to indexed DB
     dbstore.add(recordToAdd);
 }
+
+// read from indexedDB
+function getFromOfflineDB(){
+    // connect to indexed db
+    let dbtransaction = db.transaction("pending", "readwrite");
+    let dbstore = dbtransaction.objectStore("pending");
+    // get all from indexed db
+    dbstore.getAll();
+}
+
+// check online / offline status
+window.addEventListener('online', function(e) { console.log('online'); });
