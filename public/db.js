@@ -25,3 +25,9 @@ request.onupgradeneeded = function(event){
     db.createObjectStore("pending", {autoIncrement: true});
 };
 
+// add entries to indexedDB
+function addToOfflineDB(recordToAdd) {
+    let dbtransaction = db.transaction("pending", "readwrite");
+    let dbstore = dbtransaction.objectStore("pending");
+    dbstore.add(recordToAdd);
+}
