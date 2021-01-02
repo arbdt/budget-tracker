@@ -40,7 +40,21 @@ function getFromOfflineDB(){
     let dbtransaction = db.transaction("pending", "readwrite");
     let dbstore = dbtransaction.objectStore("pending");
     // get all from indexed db
-    dbstore.getAll();
+    let allContent = dbstore.getAll();
+    // send offline db content to online db if connected
+    sendToOnlineDB(allContent);
+}
+
+// send to online DB
+// url: api/transaction/bulk
+function sendToOnlineDB(entriesToAdd){
+    // other files use fetch() so let's do that
+    fetch("/api/transaction/bulk", {
+        method: "POST",
+        body: allContent
+    }).then(function (response){
+        console.log(response);
+    });
 }
 
 // check online / offline status
